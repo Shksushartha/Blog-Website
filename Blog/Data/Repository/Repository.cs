@@ -62,6 +62,18 @@ namespace Blog.Data.Repository
         {
             _blogDbContext.subComments.Add(sc);
         }
+
+        public void removeComment(int id)
+        {
+            var c = _blogDbContext.mainComments.Where(p => p.Id == id).First();
+            _blogDbContext.mainComments.Remove(c);
+        }
+
+        public void removeSubComment(int id)
+        {
+            var c = _blogDbContext.subComments.Where(p => p.Id == id).First();
+            _blogDbContext.subComments.Remove(c);
+        }
     }
 }
 

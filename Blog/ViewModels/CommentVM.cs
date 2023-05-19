@@ -9,6 +9,7 @@ namespace Blog.ViewModels
 		
 		public int postId { get; set; }
 		public int MainCommentId { get; set; }
+		public int SubCommentId { get; set; }
 		public string comment { get; set; }
 
 	}

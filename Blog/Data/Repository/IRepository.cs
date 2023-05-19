@@ -15,6 +15,8 @@ namespace Blog.Data.Repository
 		Post getPostTitle(SearchVM s);
 
 		void addSubComment(SubComment sc);
+		void removeComment(int id);
+		void removeSubComment(int id);
 
 		Task<bool> saveChangesAsync();
         

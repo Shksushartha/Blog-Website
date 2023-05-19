@@ -23,19 +23,35 @@
 
     @foreach(var c in Model.mainComments)
 {
-        <tr>
+        <tr class="mb-3">
             <td>
                 @c.comment
+
+                @if (User.IsInRole("Admin"))
+                {
+                    {
+                        Html.RenderPartial("_removeComment", new CommentVM { postId = Model.Id, MainCommentId = c.Id });
+                    }
+                }
                 <ul>
-                    @foreach(var sc in c.subComments)
-{
-                            <li>@sc.comment</li>
-}
+                    @foreach (var sc in c.subComments)
+                    {
+                        <li>
+                            @sc.comment
+                            @if (User.IsInRole("Admin"))
+                            {
+                                {
+                                    Html.RenderPartial("_removeSubComment", new CommentVM { postId = Model.Id, SubCommentId = sc.Id });
+                                }
+                            }
+                        </li>
+                    }
                 </ul>
                 <div>
                     Add a reply?
                     @{
-                        Html.RenderPartial("_MainComment", new CommentVM { postId = Model.Id, MainCommentId = c.Id });                    }
+                        Html.RenderPartial("_MainComment", new CommentVM { postId = Model.Id, MainCommentId = c.Id });
+                    }
 
                 </div>
             </td>

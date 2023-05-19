@@ -72,6 +72,30 @@ namespace Blog.Controllers
             }
             else return View(id);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveComment(CommentVM c)
+        {
+            _ctx.removeComment(c.MainCommentId);
+            if (await _ctx.saveChangesAsync())
+            {
+                return  RedirectToAction("Post", "Home", new { id = c.postId });
+            }
+            else return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveSubComment(CommentVM c)
+        {
+            _ctx.removeComment(c.SubCommentId);
+            if (await _ctx.saveChangesAsync())
+            {
+                return RedirectToAction("Post", "Home", new { id = c.postId });
+            }
+            else return RedirectToAction("Index", "Home");
+        }
+
+        
     }
 }
 
