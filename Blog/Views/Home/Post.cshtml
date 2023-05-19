@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Post
+
+<h1>@Model.Title</h1>
+
+@if (!string.IsNullOrEmpty(Model.Image))
+    {
+        var image_path = $"/Image/{Model.Image}";
+        <img src="@image_path" width="500px"/>
+}
+
+<p>@Model.Body</p>
+<br />
+<h2>
+    Comments
+</h2>
+    <table class="table">
+
+    @foreach(var c in Model.mainComments)
+{
+        <tr>
+            <td>
+                @c.comment
+                <ul>
+                    @foreach(var sc in c.subComments)
+{
+                            <li>@sc.comment</li>
+}
+                </ul>
+                <div>
+                    Add a reply?
+                    @{
+                        Html.RenderPartial("_MainComment", new CommentVM { postId = Model.Id, MainCommentId = c.Id });                    }
+
+                </div>
+            </td>
+        </tr>
+                        }
+    </table>
+
+
+<div>
+    Add a comment?
+    @{
+            Html.RenderPartial("_MainComment", new CommentVM { postId = Model.Id, MainCommentId = 0 });
+        }
+    
+</div>
+
+

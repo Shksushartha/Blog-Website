@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model IEnumerable<Post>
+
+<div class="text-center">
+    <h1>Admin Panel</h1>
+    @if (User.Identity.IsAuthenticated)
+{
+
+    <div>
+        <table class="table">
+            @foreach (var items in Model)
+            {
+                <tr>
+                    <td>
+                        @items.Title
+
+                    </td>
+                    <td>
+                        <a class="btn btn-primary mb-3" asp-controller="Panel" asp-action="Edit" asp-route-id="@items.Id">Edit</a>
+
+                    </td>
+                    <td>
+                        <a class="btn btn-primary mb-3" asp-controller="Panel" asp-action="Remove" asp-route-id="@items.Id">Remove</a>
+
+                    </td>
+                </tr>
+            }
+        </table>
+
+    </div>
+}
+    
+   
+</div>
+
