@@ -1,6 +1,7 @@
 ﻿using System;
 using Blog.Models;
 using Blog.Models.Comments;
+using Blog.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Data.Repository
@@ -26,6 +27,14 @@ namespace Blog.Data.Repository
                 .Include(p => p.mainComments)
                     .ThenInclude(m => m.subComments)
                 .First(p => p.Id == id);
+        }
+
+        public Post getPostTitle(SearchVM s)
+        {
+            return _blogDbContext.Posts
+                .Include(p => p.mainComments)
+                    .ThenInclude(m => m.subComments)
+                .First(p => p.Title == s.Title);
         }
         public List<Post> getPost()
         {

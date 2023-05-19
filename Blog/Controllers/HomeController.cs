@@ -6,6 +6,7 @@ using Blog.Data.Repository;
 using Blog.Data.FileManager;
 using Blog.ViewModels;
 using Blog.Models.Comments;
+using Microsoft.Extensions.Hosting;
 
 namespace Blog.Controllers;
 
@@ -33,6 +34,14 @@ public class HomeController : Controller
     {
         var post = _ctx.getPostId(id);
         return View(post);
+    }
+
+    [HttpPost]
+    public IActionResult Post(SearchVM s)
+    {
+        var post = _ctx.getPostTitle(s);
+        return View(post);
+
     }
 
     [HttpGet("/Image/{image}")]
@@ -110,7 +119,29 @@ public class HomeController : Controller
         return RedirectToAction("Post", new { id = cm.postId });
     }
 
+    [HttpGet]
+    public IActionResult Search()
+    {
+        return View(new SearchVM());
+    }
 
+    [HttpPost]
+    public IActionResult Search(SearchVM s)
+    {
+        try
+        {
+            var post = _ctx.getPostTitle(s);
+            return RedirectToAction("Post", post);
+
+        }
+        catch(Exception e)
+        {
+            Console.Write(e);
+            return RedirectToAction("Index");
+        }
+    }
+
+    
 
 
 }

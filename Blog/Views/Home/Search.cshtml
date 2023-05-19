@@ -1,0 +1,18 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SearchVM
+
+
+    <form class="form-inline my-2 my-lg-0 d-flex flex-row" asp-controller="Home" asp-action="Search">
+
+        <input class="form-control mr-sm-2 mr-3" type="search" asp-for="Title" placeholder="Search" aria-label="Search">
+
+
+
+        <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Search</button>
+
+    </form>
+
