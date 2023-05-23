@@ -9,20 +9,27 @@
 <h1>@Model.Title</h1>
 
 @if (!string.IsNullOrEmpty(Model.Image))
-    {
-        var image_path = $"/Image/{Model.Image}";
-        <img src="@image_path" width="500px"/>
+{
+    var image_path = $"/Image/{Model.Image}";
+    <img src="@image_path" width="500px" />
 }
 
 <p>@Model.Body</p>
 <br />
+<h3>Likes: @Model.likes</h3>
+<br />
+
+@{
+    Html.RenderPartial("_userLike", new postLikesUsers { PostId = Model.Id, user = ViewBag.userId });
+}
+
 <h2>
     Comments
 </h2>
-    <table class="table">
+<table class="table">
 
-    @foreach(var c in Model.mainComments)
-{
+    @foreach (var c in Model.mainComments)
+    {
         <tr class="mb-3">
             <td>
                 @c.comment
@@ -56,16 +63,16 @@
                 </div>
             </td>
         </tr>
-                        }
-    </table>
+    }
+</table>
 
 
 <div>
     Add a comment?
     @{
-            Html.RenderPartial("_MainComment", new CommentVM { postId = Model.Id, MainCommentId = 0 });
-        }
-    
+        Html.RenderPartial("_MainComment", new CommentVM { postId = Model.Id, MainCommentId = 0 });
+    }
+
 </div>
 
 

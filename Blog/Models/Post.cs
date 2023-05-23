@@ -16,7 +16,9 @@ namespace Blog.Models
 		public string Description { get; set; } = "";
         public string Tags { get; set; } = "";
         public string Category { get; set; } = "";
+		public int likes { get; set; }
 
+		public List<postLikesUsers> postLikesUsers { get; set; }
 		public List<MainComment> mainComments { get; set; }
     }
 }

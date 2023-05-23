@@ -7,6 +7,7 @@ using Blog.Data.FileManager;
 using Blog.ViewModels;
 using Blog.Models.Comments;
 using Microsoft.Extensions.Hosting;
+using System.Security.Claims;
 
 namespace Blog.Controllers;
 
@@ -30,9 +31,13 @@ public class HomeController : Controller
         return View(_ctx.getPost());
     }
 
+    [HttpGet]
     public IActionResult Post(int id)
     {
         var post = _ctx.getPostId(id);
+        
+        ViewBag.check = _ctx.isLiked(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
+        ViewBag.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         return View(post);
     }
 
@@ -40,6 +45,7 @@ public class HomeController : Controller
     public IActionResult Post(SearchVM s)
     {
         var post = _ctx.getPostTitle(s);
+        ViewBag.check = _ctx.isLiked(post.Id, User.FindFirstValue(ClaimTypes.NameIdentifier));
         return View(post);
 
     }
@@ -140,6 +146,27 @@ public class HomeController : Controller
             return RedirectToAction("Index");
         }
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Like(postLikesUsers p)
+    {
+        if(_ctx.isLiked(p.PostId, User.FindFirstValue(ClaimTypes.NameIdentifier))){
+            _ctx.unlike(p.PostId, p.user);
+            _ctx.substractlike(p.PostId);
+            
+        }
+        else
+        {
+            _ctx.like(p.PostId, p.user);
+            _ctx.addlike(p.PostId);
+        }
+        await _ctx.saveChangesAsync();
+        var post = _ctx.getPostId(p.PostId);
+        return RedirectToAction("Post", post);
+    }
+
+
+    
 
     
 

@@ -18,6 +18,11 @@
                     Blogs
                         </h2>
                 </th>
+                <th>
+                    <h3>
+                        Likes
+                    </h3>
+                </th>
             </tr>
             @foreach (var items in Model)
             {
@@ -26,6 +31,7 @@
                         <a asp-controller="Home" asp-action="Post" asp-route-id="@items.Id">@items.Title</a>
 
                     </td>
+                    <td>@items.likes</td>
                 </tr>
             }
         </table>

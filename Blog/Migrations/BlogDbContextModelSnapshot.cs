@@ -106,9 +106,34 @@ namespace Blog.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("likes")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Blog.Models.postLikesUsers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("user")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("postLikesUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -325,6 +350,15 @@ namespace Blog.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Blog.Models.postLikesUsers", b =>
+                {
+                    b.HasOne("Blog.Models.Post", null)
+                        .WithMany("postLikesUsers")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -384,6 +418,8 @@ namespace Blog.Migrations
             modelBuilder.Entity("Blog.Models.Post", b =>
                 {
                     b.Navigation("mainComments");
+
+                    b.Navigation("postLikesUsers");
                 });
 #pragma warning restore 612, 618
         }

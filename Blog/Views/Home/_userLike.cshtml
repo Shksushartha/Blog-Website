@@ -1,0 +1,19 @@
+﻿@model postLikesUsers
+
+@if (!ViewBag.check)
+{
+    <form asp-controller="Home" asp-action="Like">
+        <input type="hidden" asp-for="PostId" />
+        <input type="hidden" asp-for="user" />
+        <button class="btn btn-primary">Like</button>
+    </form>
+
+}
+else
+{
+    <form asp-controller="Home" asp-action="Like">
+        <input type="hidden" asp-for="PostId" />
+        <input type="hidden" asp-for="user" />
+        <button class="btn btn-primary">Dislike</button>
+    </form>
+}

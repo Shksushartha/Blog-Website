@@ -16,6 +16,7 @@ namespace Blog.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<MainComment> mainComments { get; set; }
         public DbSet<SubComment> subComments { get; set; }
+        public DbSet<postLikesUsers> postLikesUsers { get; set; }
 
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {

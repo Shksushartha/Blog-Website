@@ -17,9 +17,14 @@ namespace Blog.Data.Repository
 		void addSubComment(SubComment sc);
 		void removeComment(int id);
 		void removeSubComment(int id);
+		bool isLiked(int pid, string uid);
+		void like(int pid, string uid);
+        void unlike(int pid, string uid);
+		void addlike(int pid);
+		void substractlike(int pid);
+
 
 		Task<bool> saveChangesAsync();
-        
     }
 }
 

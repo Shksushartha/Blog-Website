@@ -14,6 +14,7 @@ namespace Blog.ViewModels
         public string Description { get; set; } = "";
         public string Tags { get; set; } = "";
         public string Category { get; set; } = "";
+        public bool? like { get; set; }
     }
 }
 

@@ -74,6 +74,46 @@ namespace Blog.Data.Repository
             var c = _blogDbContext.subComments.Where(p => p.Id == id).First();
             _blogDbContext.subComments.Remove(c);
         }
+
+        public bool isLiked(int pid, string uid)
+        {
+            if(_blogDbContext.postLikesUsers.Where(d => (d.PostId == pid) && (d.user == uid)).FirstOrDefault() != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void like(int pid, string uid)
+        {
+            var l = new postLikesUsers()
+            {
+                PostId = pid,
+                user = uid
+            };
+            _blogDbContext.postLikesUsers.Add(l);
+        }
+
+        public void unlike(int pid, string uid)
+        {
+            var l = _blogDbContext.postLikesUsers.Where(d => (d.PostId == pid) && (d.user == uid)).First();
+            _blogDbContext.postLikesUsers.Remove(l);
+        }
+
+        public void addlike(int pid)
+        {
+            var post = _blogDbContext.Posts.Where(p => p.Id == pid).FirstOrDefault();
+            post.likes += 1;
+        }
+
+        public void substractlike(int pid)
+        {
+            var post = _blogDbContext.Posts.Where(p => p.Id == pid).FirstOrDefault();
+            post.likes -= 1;
+        }
     }
 }
 

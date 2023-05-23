@@ -87,7 +87,7 @@ namespace Blog.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveSubComment(CommentVM c)
         {
-            _ctx.removeComment(c.SubCommentId);
+            _ctx.removeSubComment(c.SubCommentId);
             if (await _ctx.saveChangesAsync())
             {
                 return RedirectToAction("Post", "Home", new { id = c.postId });
