@@ -24,7 +24,7 @@ public class HomeController : Controller
         _fileManager = fileManager;
     }
 
-    
+
 
     public IActionResult Index()
     {
@@ -32,10 +32,10 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public IActionResult Post(int id)
+    public ActionResult Post(int id)
     {
         var post = _ctx.getPostId(id);
-        
+
         ViewBag.check = _ctx.isLiked(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
         ViewBag.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         return View(post);
@@ -115,7 +115,7 @@ public class HomeController : Controller
             {
                 comment = cm.comment,
                 MainCommentId = cm.MainCommentId,
-                                commentor = "no"
+                commentor = "no"
 
             };
             _ctx.addSubComment(comment);
@@ -140,7 +140,7 @@ public class HomeController : Controller
             return RedirectToAction("Post", post);
 
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.Write(e);
             return RedirectToAction("Index");
@@ -150,10 +150,11 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Like(postLikesUsers p)
     {
-        if(_ctx.isLiked(p.PostId, User.FindFirstValue(ClaimTypes.NameIdentifier))){
+        if (_ctx.isLiked(p.PostId, User.FindFirstValue(ClaimTypes.NameIdentifier)))
+        {
             _ctx.unlike(p.PostId, p.user);
             _ctx.substractlike(p.PostId);
-            
+
         }
         else
         {
@@ -166,9 +167,9 @@ public class HomeController : Controller
     }
 
 
-    
 
-    
+
+
 
 
 }
