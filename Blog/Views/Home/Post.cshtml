@@ -4,75 +4,92 @@
 @{
 }
 
-@model Post
 
-<h1>@Model.Title</h1>
 
-@if (!string.IsNullOrEmpty(Model.Image))
-{
-    var image_path = $"/Image/{Model.Image}";
-    <img src="@image_path" width="500px" />
-}
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <h1>@Model.Title</h1>
+    <br />
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        @if (!string.IsNullOrEmpty(Model.Image))
+        {
+            var image_path = $"/Image/{Model.Image}";
+            <img src="@image_path" width="500px" />
+            <br />
+        }
 
-<p>@Model.Body</p>
-<br />
-<h3>Likes: @Model.likes</h3>
-<br />
 
-@{
-    Html.RenderPartial("_userLike", new postLikesUsers { PostId = Model.Id, user = ViewBag.userId });
-}
+    </div>
+    <br>
+    <p>@Model.Body</p>
+    <br />
+    <div class="d-flex justify-content-around align-items-center">
 
-<h2>
-    Comments
-</h2>
-<table class="table">
+        <div class="d-flex flex-column justify-content-center align-items-center ml-3">
+            <h4>Likes: @Model.likes</h4>
 
-    @foreach (var c in Model.mainComments)
-    {
-        <tr class="mb-3">
-            <td>
-                @c.comment
+            @{
+                Html.RenderPartial("_userLike", new postLikesUsers { PostId = Model.Id, user = ViewBag.userId });
+            }
 
-                @if (User.IsInRole("Admin"))
+            <br />
+            <h2>
+                Comments
+            </h2>
+            <table class="table">
+
+                @foreach (var c in Model.mainComments)
                 {
-                    {
-                        Html.RenderPartial("_removeComment", new CommentVM { postId = Model.Id, MainCommentId = c.Id });
-                    }
-                }
-                <ul>
-                    @foreach (var sc in c.subComments)
-                    {
-                        <li>
-                            @sc.comment
+                    <tr class="mb-3">
+                        <td class="text-center">
+                            @c.comment
+
                             @if (User.IsInRole("Admin"))
                             {
                                 {
-                                    Html.RenderPartial("_removeSubComment", new CommentVM { postId = Model.Id, SubCommentId = sc.Id });
+                                    Html.RenderPartial("_removeComment", new CommentVM { postId = Model.Id, MainCommentId = c.Id });
                                 }
                             }
-                        </li>
-                    }
-                </ul>
-                <div>
-                    Add a reply?
-                    @{
-                        Html.RenderPartial("_MainComment", new CommentVM { postId = Model.Id, MainCommentId = c.Id });
-                    }
+                            <br>
 
-                </div>
-            </td>
-        </tr>
-    }
-</table>
+                            <ul>
+                                @foreach (var sc in c.subComments)
+                                {
+                                    <li>
+                                        <div class="d-flex flex-row justify-content-center align-items-center">
+                                            @sc.comment
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                {
+                                                    Html.RenderPartial("_removeSubComment", new CommentVM { postId = Model.Id, SubCommentId = sc.Id });
+                                                }
+                                            }
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                            <div>
+                                Add a reply?
+                                @{
+                                    Html.RenderPartial("_MainComment", new CommentVM { postId = Model.Id, MainCommentId = c.Id });
+                                }
 
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
 
-<div>
-    Add a comment?
-    @{
-        Html.RenderPartial("_MainComment", new CommentVM { postId = Model.Id, MainCommentId = 0 });
-    }
+            <div>
+                Add a comment?
+                @{
+                    Html.RenderPartial("_MainComment", new CommentVM { postId = Model.Id, MainCommentId = 0 });
+                }
 
+            </div>
+            <hr>
+            @*<a asp-controller="Home" asp-action="PostPdf" asp-route-id="@Model.Id">
+                    <button class="btn btn-primary">Generate Pdf</button>
+                </a>*@
+        </div>
+    </div>
 </div>
-
-

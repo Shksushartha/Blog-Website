@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Data
 {
-	public class BlogDbContext: IdentityDbContext
-	{     
+    public class BlogDbContext : IdentityDbContext
+    {
 
         public BlogDbContext()
-		{           
+        {
         }
 
         public DbSet<Post> Posts { get; set; }
@@ -25,8 +25,8 @@ namespace Blog.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);      
-        }        
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }
 

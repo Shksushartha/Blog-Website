@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Data.Repository
 {
-	public class Repository : IRepository
-	{
+    public class Repository : IRepository
+    {
         private readonly BlogDbContext _blogDbContext;
 
         public Repository(BlogDbContext blogDbContext)
@@ -18,7 +18,7 @@ namespace Blog.Data.Repository
         public void addPost(Post p)
         {
             _blogDbContext.Posts.Add(p);
-            
+
         }
 
         public Post getPostId(int id)
@@ -36,9 +36,9 @@ namespace Blog.Data.Repository
                     .ThenInclude(m => m.subComments)
                 .First(p => p.Title == s.Title);
         }
-        public List<Post> getPost()
+        public Post getPost()
         {
-            return _blogDbContext.Posts.ToList();
+            return _blogDbContext.Posts.Where(post => post.Id == 1).First();
         }
 
         public void deletePost(int id)
@@ -48,7 +48,7 @@ namespace Blog.Data.Repository
 
         public void updatePost(Post p)
         {
-            _blogDbContext.Posts.Update(p);
+            _blogDbContext.Posts.ToList();
         }
 
         public async Task<bool> saveChangesAsync()
@@ -77,7 +77,7 @@ namespace Blog.Data.Repository
 
         public bool isLiked(int pid, string uid)
         {
-            if(_blogDbContext.postLikesUsers.Where(d => (d.PostId == pid) && (d.user == uid)).FirstOrDefault() != null)
+            if (_blogDbContext.postLikesUsers.Where(d => (d.PostId == pid) && (d.user == uid)).FirstOrDefault() != null)
             {
                 return true;
             }
@@ -113,6 +113,12 @@ namespace Blog.Data.Repository
         {
             var post = _blogDbContext.Posts.Where(p => p.Id == pid).FirstOrDefault();
             post.likes -= 1;
+        }
+
+        List<Post> IRepository.getPost()
+        {
+            var posts = _blogDbContext.Posts.ToList();
+            return posts;
         }
     }
 }

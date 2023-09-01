@@ -29,6 +29,7 @@
     <Folder Include="Data\FileManager\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="Models\Comments\" />
+    <Folder Include="wwwroot\Rotativa\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
@@ -44,11 +45,17 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
+    <PackageReference Include="RotativaHQ" Version="1.5.0" />
+    <PackageReference Include="Rotativa" Version="1.7.3" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.2.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\content\" />
     <Content Remove="wwwroot\content\static\" />
     <Content Remove="wwwroot\content\blog\" />
     <Content Remove="wwwroot\lib\" />
+    <Content Remove="wwwroot\Rotativa\" />
   </ItemGroup>
 </Project>

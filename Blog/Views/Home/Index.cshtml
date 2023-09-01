@@ -6,39 +6,36 @@
 
 <div class="text-center">
     <h1>Welcome</h1>
-    @*<img src="~/content/static/DSC04598.JPG" width="700px"/>*@
-    @if (User.Identity.IsAuthenticated)
-    {
+    <br>
 
-        <div class="mt-3">
-            <table class="table">
-                <tr>
-                    <th>
-                        <h2>
-                            Blogs
-                        </h2>
-                    </th>
-                    <th>
-                        <h3>
-                            Likes
+    <div style="max-width:800px; width:100%; margin:auto">
+        @*<img src="~/content/static/DSC04598.JPG" width="700px"/>*@
+        @if (User.Identity.IsAuthenticated)
+        {
+
+            @foreach (var post in Model)
+            {
+
+                var image_path = $"/Image/{post.Image}";
+                <a class="post" asp-controller="Home" asp-action="Post" asp-route-id="@post.Id" style="display:flex;align-content:center;justify-content:space-around;position:relative; text-decoration:none; color:black">
+                    <div>
+                        <h3 class="title" style="text-decoration: none; display: flex; align-content: center; justify-content:center">
+                            @post.Title
                         </h3>
-                    </th>
-                </tr>
-                @foreach (var items in Model)
-                {
-                    <tr>
-                        <td>
-                            <a asp-controller="Home" asp-action="Post" asp-route-id="@items.Id">@items.Title</a>
+                        <div>
+                            Likes: @post.likes
+                        </div>
+                    </div>
+                    <img src="@image_path" style="width:300px; height:175px;object-fit:cover;align-items:center" />
+                </a>
+                <br>
+                <hr>
+                <br />
 
-                        </td>
-                        <td>@items.likes</td>
-                    </tr>
-                }
-            </table>
+            }
 
-        </div>
-    }
-
+        }
+    </div>
 
 </div>
 

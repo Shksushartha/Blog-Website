@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Rotativa;
 
 namespace Blog
 {
@@ -29,15 +30,15 @@ namespace Blog
 
             services.AddDbContext<BlogDbContext>(options => options.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
 
-             services.AddIdentity<IdentityUser, IdentityRole>(options =>
-             {
-                 options.Password.RequireDigit = false;
-                 options.Password.RequireNonAlphanumeric = false;
-                 options.Password.RequireUppercase = false;
-                 options.Password.RequiredLength = 5;
-             })
-                
-                 .AddEntityFrameworkStores<BlogDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 5;
+            })
+
+                .AddEntityFrameworkStores<BlogDbContext>();
 
             // services.ConfigureApplicationCookie(options =>
             // {
@@ -50,7 +51,7 @@ namespace Blog
             });
 
             services.AddTransient<IRepository, Repository>();
-             services.AddTransient<IFileManager, FileManager>();
+            services.AddTransient<IFileManager, FileManager>();
             //services.AddSingleton<IEmailService, EmailService>();
 
 
@@ -68,8 +69,11 @@ namespace Blog
 
             app.UseStaticFiles();
             app.UseAuthentication();
-        
+
             app.UseMvcWithDefaultRoute();
+
+
+
         }
     }
 }

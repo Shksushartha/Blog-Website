@@ -8,6 +8,8 @@ using Blog.ViewModels;
 using Blog.Models.Comments;
 using Microsoft.Extensions.Hosting;
 using System.Security.Claims;
+using Rotativa.AspNetCore;
+using System.Data.SqlClient;
 
 namespace Blog.Controllers;
 
@@ -28,7 +30,9 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View(_ctx.getPost());
+        var p = _ctx.getPost();
+
+        return View(p);
     }
 
     [HttpGet]
@@ -38,15 +42,30 @@ public class HomeController : Controller
 
         ViewBag.check = _ctx.isLiked(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
         ViewBag.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         return View(post);
     }
 
+    [HttpGet]
+    public IActionResult PostPdf(int id)
+    {
+
+        var pdf = new ViewAsPdf("Post", id);
+        SqlCommand s1 = new SqlCommand();
+        var result = s1.ExecuteNonQuery();
+
+        return pdf;
+    }
+
     [HttpPost]
-    public IActionResult Post(SearchVM s)
+    public ActionResult Post(SearchVM s)
     {
         var post = _ctx.getPostTitle(s);
         ViewBag.check = _ctx.isLiked(post.Id, User.FindFirstValue(ClaimTypes.NameIdentifier));
-        return View(post);
+        List<Post> p = new List<Post>();
+        p.Add(post);
+        return new ViewAsPdf(post);
+
 
     }
 
